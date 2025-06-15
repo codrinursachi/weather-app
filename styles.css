@@ -1,0 +1,75 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Stilurile tale aici */
+
+body {
+    background: linear-gradient(to bottom, blue, darkblue);
+    height: 100vh;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+    justify-content: start;
+    height: 100%;
+    padding: 80px;
+    width: 100%;
+    max-width: 1080px;
+}
+
+header{
+    width: 100%;
+}
+
+main{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input{
+    border-radius: 6px;
+    padding: 4px;
+    outline: none;
+    width: calc(100% - 64px);
+}
+
+button {
+    border-radius: 6px;
+    padding: 4px;
+    background-color: aqua;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 60px;
+}
+
+button:hover {
+    background-color: darkturquoise;
+}
+
+#loading {
+    width: 50px;
+    height: 50px;
+    border: 8px solid white;
+    border-top: 8px solid darkturquoise;
+    border-radius: 100%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
