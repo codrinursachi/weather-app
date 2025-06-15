@@ -13,6 +13,7 @@
 body {
     background: linear-gradient(to bottom, blue, darkblue);
     height: 100vh;
+    color: white;
 }
 
 #app {
@@ -25,6 +26,8 @@ body {
     padding: 80px;
     width: 100%;
     max-width: 1080px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 header{
