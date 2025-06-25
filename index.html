@@ -19,12 +19,35 @@
                 </form>
             </header>
             <main>
+                <div class="controls">
+                    <div class="control-group">
+                        <label for="unit-select">Unitatea temperaturii:</label>
+                        <select id="unit-select">
+                            <option value="metric">Metric (°C)</option>
+                            <option value="imperial">Imperial (°F)</option>
+                            <!-- Ce opțiuni pentru unități? metric/imperial? -->
+                            <!-- Ce valori pui în value? -->
+                            <!-- Care este selecția default? -->
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="lang-select">Limba descrierilor:</label>
+                        <select id="lang-select">
+                            <option value="ro">Romana</option>
+                            <option value="en">Engleza</option>
+                            <!-- Ce limbi suportă OpenWeatherMap? -->
+                            <!-- ro, en, fr, de, es? -->
+                            <!-- Cum afișezi numele limbilor în română? -->
+                        </select>
+                    </div>
+                </div>
                 <div id="loading" class="hidden"></div>
                 <div id="error" class="hidden"></div>
                 <div id="weather-display" class="hidden">
                     <h2 id="city-name"></h2>
                     <img id="icon" alt="Weather Icon" />
-                    <h1 id="temp"></h1>
+                    <h1 id="temp"><span id="temp-value"></span><span id="unit"></span></h1>
                     <p id="description"></p>
                     <p id="humidity"></p>
                     <p id="pressure"></p>

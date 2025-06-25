@@ -1,8 +1,11 @@
+import { CONFIG } from "./config.js";
+
 export const elements = {
     weatherDisplay: document.querySelector("#weather-display"),
     cityInput: document.querySelector("#city-input"),
     cityName: document.querySelector("#city-name"),
-    temp: document.querySelector("#temp"),
+    temp: document.querySelector("#temp-value"),
+    unit: document.querySelector("#unit"),
     humidity: document.querySelector("#humidity"),
     description: document.querySelector("#description"),
     windSpeed: document.querySelector("#wind-speed"),
@@ -13,6 +16,8 @@ export const elements = {
     visibility: document.querySelector("#visibility"),
     sunrise: document.querySelector("#sunrise"),
     sunset: document.querySelector("#sunset"),
+    unitSelect: document.querySelector("#unit-select"),
+    langSelect: document.querySelector("#lang-select"),
 };
 
 export const showLoading = () => {
@@ -32,7 +37,8 @@ export const showError = (message) => {
 export const displayWeather = (data) => {
     elements.cityName.textContent = data.name;
     elements.icon.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
-    elements.temp.textContent = `${data.main.temp}°C`;
+    elements.temp.textContent = `${data.main.temp}`;
+    elements.unit.textContent = loadUserPreferences().unit === "metric" ? "°C" : "°F";
     elements.description.textContent = data.weather[0].description;
     elements.humidity.textContent = `Humidity: ${data.main.humidity}%`;
     elements.pressure.textContent = `Pressure: ${data.main.pressure} hPa`;
@@ -56,11 +62,24 @@ export const clearCityInput = () => {
     elements.cityInput.value = "";
 };
 
-export default {
-    showLoading,
-    hideLoading,
-    showError,
-    displayWeather,
-    getCityInput,
-    clearCityInput,
+// Funcție pentru salvarea preferințelor
+export const saveUserPreferences = (unit, lang) => {
+    // Cum folosești localStorage?
+    // Ce chei folosești pentru stocare?
+    window.localStorage.setItem("unit", unit);
+    window.localStorage.setItem("lang", lang);
+};
+
+// Funcție pentru încărcarea preferințelor
+export const loadUserPreferences = () => {
+    // Cum citești din localStorage?
+    // Ce valori default folosești dacă nu există preferințe?
+    return {
+        unit:
+            window.localStorage.getItem("unit") ||
+            CONFIG.DEFAULT_UNITS /* ce default? */,
+        lang:
+            window.localStorage.getItem("lang") ||
+            CONFIG.DEFAULT_LANG /* ce default? */,
+    };
 };
