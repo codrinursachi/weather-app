@@ -10,14 +10,13 @@ import {
     addHistoryEventListeners,
     renderHistory,
     showHistory,
-} from "./modules/ui-controller.js";
-import {
     showLoading,
     showError,
     displayWeather,
     elements,
     hideLoading,
     getCityInput,
+    debouncedSearch
 } from "./modules/ui-controller.js";
 import { logger } from "./modules/logger.js";
 import { historyService } from "./modules/history-service.js";
@@ -27,7 +26,7 @@ const setupEventListeners = () => {
     const form = document.querySelector("#city-search-form");
     form.addEventListener("submit", (event) => {
         event.preventDefault(); // Previne reload-ul paginii
-        handleSearch();
+        debouncedSearch(handleSearch);
     });
 
     // Cum gestionezi schimbările de preferințe?

@@ -88,6 +88,18 @@ export const loadUserPreferences = () => {
     };
 };
 
+
+// În ui-controller.js - optimizează search în timp real
+const createDebouncedSearch = (delay = 300) => {
+    let timeout
+    return (searchFn) => {
+      clearTimeout(timeout)
+      timeout = setTimeout(searchFn, delay)
+    }
+  }
+  
+export const debouncedSearch = createDebouncedSearch()
+  
 export const showHistory = () => {
     elements.historySection.classList.remove("hidden");
 };
