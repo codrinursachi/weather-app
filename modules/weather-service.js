@@ -9,7 +9,13 @@ export const getCurrentWeather = async (city) => {
             throw new Error("City name is required");
         }
         try {
-            return makeRequest(buildUrl("/weather", { q: city }));
+            const cachedData = weatherCache.get(city);
+            if (!cachedData) {
+                const data = await makeRequest(buildUrl("/weather", { q: city }));
+                weatherCache.set(city, data);
+                return data;
+            }
+            return cachedData;
         } catch (error) {
             console.warn("Using fallback data due to:", error.message);
             await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -27,7 +33,13 @@ export const getWeatherByCoords = async (lat, lon) => {
             throw new Error("Latitude and longitude must be numbers");
         }
         try {
-            return makeRequest(buildUrl("/weather", { lat, lon }));
+            const cachedData = weatherCache.get(`${lat},${lon}`);
+            if (!cachedData) {
+                const data = await makeRequest(buildUrl("/weather", { lat, lon }));
+                weatherCache.set(`${lat},${lon}`, data);
+                return data;
+            }
+            return cachedData;
         } catch (error) {
             console.warn("Using fallback data due to:", error.message);
             await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -90,3 +102,33 @@ const makeRequest = async (url) => {
         );
     }
 };
+
+// În weather-service.js - cache inteligent
+class WeatherCache {
+    constructor(maxAge = 10 * 60 * 1000) {
+        // 10 minute
+        this.cache = new Map();
+        this.maxAge = maxAge;
+    }
+
+    get(key) {
+        this.cleanup();
+        const entry = this.cache.get(key);
+        return entry?.data;
+    }
+
+    set(key, data) {
+        this.cache.set(key, { data, timestamp: Date.now() });
+    }
+
+    cleanup() {
+        const now = Date.now();
+        for (const [key, { timestamp }] of this.cache.entries()) {
+            if (now - timestamp > this.maxAge) {
+                this.cache.delete(key);
+            }
+        }
+    }
+}
+
+export const weatherCache = new WeatherCache();

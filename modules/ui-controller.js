@@ -83,3 +83,15 @@ export const loadUserPreferences = () => {
             CONFIG.DEFAULT_LANG /* ce default? */,
     };
 };
+
+// În ui-controller.js - optimizează search în timp real
+const createDebouncedSearch = (delay = 300) => {
+    let timeout
+    return (searchFn) => {
+      clearTimeout(timeout)
+      timeout = setTimeout(searchFn, delay)
+    }
+  }
+  
+  export const debouncedSearch = createDebouncedSearch()
+  
